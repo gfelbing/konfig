@@ -6,56 +6,49 @@ def publishVersion = "0.0.1"
 bintray {
     user = this.properties['bintray.user'] ?: "BINTRAY_USER"
     key = this.properties['bintray.api.key'] ?: "BINTRAY_API_KEY"
+
+    publications = ['bintray']
+
     pkg {
-        repo = 'libs-upload'
-        name = 'konfig'
-        userOrg = 'cybr-fail'
+        repo = 'maven'
+        name = project.name
         licenses = ['Apache-2.0']
         vcsUrl = 'https://github.com/gfelbing/konfig.git'
         version {
             name = publishVersion
             released = new Date()
-            vcsTag = "v$publishVersion"
         }
     }
 }
 
-task sourcesJar(type: Jar, dependsOn: classes) {
-    archiveClassifier.set("sources")
-    from sourceSets.main.allSource
-}
+def pomConfig = {
+    licenses {
+        license {
+            name "The Apache Software License, Version 2.0"
+            url "http://www.apache.org/licenses/LICENSE-2.0.txt"
+            distribution "repo"
+        }
+    }
 
-task javadocJar(type: Jar, dependsOn: javadoc) {
-    archiveClassifier.set("sources")
-    from javadoc.destinationDir
+    scm {
+        url 'https://github.com/gfelbing/konfig'
+    }
 }
 
 publishing {
     publications {
-        Bintray(MavenPublication) {
+        bintray(MavenPublication) {
             from components.java
             artifact sourcesJar
             artifact javadocJar
             groupId 'de.gfelbing'
-            artifactId 'konfig'
-            version ''
+            artifactId project.name
+            version publishVersion
             pom.withXml {
                 def root = asNode()
                 root.appendNode('description', 'Lightweight configuration framework for kotlin.')
-                root.appendNode('name', 'konfig')
-                root.children().last() + {
-                    licenses {
-                        license {
-                            name "The Apache Software License, Version 2.0"
-                            url "http://www.apache.org/licenses/LICENSE-2.0.txt"
-                            distribution "repo"
-                        }
-                    }
-
-                    scm {
-                        url 'https://github.com/gfelbing/konfig'
-                    }
-                }
+                root.appendNode('name', project.name)
+                root.children().last() + pomConfig
             }
         }
     }
