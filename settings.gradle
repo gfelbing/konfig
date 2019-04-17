@@ -1,0 +1,10 @@
+include 'projects/core'
+include 'projects/examples'
+
+rootProject
+        .children
+        .each {
+    it.name = it.name
+            .replaceFirst('projects', 'konfig')
+            .replace('/', '-')
+}

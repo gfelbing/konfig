@@ -1,0 +1,9 @@
+plugins {
+    id 'org.jetbrains.kotlin.jvm' version '1.3.21'
+}
+
+apply from: "$rootDir/etc/gradle/kotlin.gradle"
+
+dependencies {
+    implementation project(':konfig-core')
+}
