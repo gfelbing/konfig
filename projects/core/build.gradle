@@ -4,7 +4,3 @@ plugins {
 
 apply from: "$rootDir/etc/gradle/kotlin.gradle"
 apply from: "$rootDir/etc/gradle/bintray.gradle"
-
-test {
-    useTestNG()
-}
