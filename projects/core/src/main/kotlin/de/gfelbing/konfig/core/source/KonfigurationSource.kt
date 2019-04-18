@@ -47,7 +47,7 @@ interface KonfigurationSource {
         val value = parameter(this)
         LOG.info(listOf(
                 desc.path.joinToString(".", "config:"),
-                value.second?.let { "value:$it" },
+                value.second.let { "value:$it" },
                 "type:${desc.typeName}",
                 desc.props.joinToString(", ", "props:[", "]"),
                 describe(desc.path)?.let { "source:$it" }

@@ -30,11 +30,28 @@ class KonfigDeclarationTest {
         val requiredLong = long("required", "long").required()
         val secretInt = int("secret", "int").secret().required()
 
+        val int = int("signed", "int")
+        val byte = byte("signed", "byte")
+        val short = short("signed", "short")
+        val long = long("signed", "long")
+
+        val double = double("double")
+        val float = float("float")
+
+        val boolean = boolean("boolean")
+
         fun load(source: KonfigurationSource) = TestConfig(
                 optionalDouble = source[optionalDouble],
                 optionalString = source[optionalString],
                 requiredLong = source[requiredLong],
-                secretInt = source[secretInt]
+                secretInt = source[secretInt],
+                int = source[int],
+                byte = source[byte],
+                short = source[short],
+                long = source[long],
+                double = source[double],
+                float = source[float],
+                boolean = source[boolean]
         )
     }
 
@@ -42,7 +59,14 @@ class KonfigDeclarationTest {
             val optionalDouble: Double?,
             val optionalString: String?,
             val requiredLong: Long,
-            val secretInt: Int
+            val secretInt: Int,
+            val int: Int?,
+            val byte: Byte?,
+            val short: Short?,
+            val long: Long?,
+            val double: Double?,
+            val float: Float?,
+            val boolean: Boolean?
     )
 
     @Test
@@ -51,12 +75,29 @@ class KonfigDeclarationTest {
                 optionalDouble = 1.23,
                 optionalString = null,
                 requiredLong = 123L,
-                secretInt = 234
+                secretInt = 234,
+                int = -1,
+                byte = -2,
+                short = -3,
+                long = -4,
+                double = 1.2,
+                float = 2.3F,
+                boolean = true
         )
 
         System.setProperty("optional.double", expectedConfig.optionalDouble.toString())
         System.setProperty("required.long", expectedConfig.requiredLong.toString())
         System.setProperty("secret.int", expectedConfig.secretInt.toString())
+
+        System.setProperty("signed.int", expectedConfig.int.toString())
+        System.setProperty("signed.byte", expectedConfig.byte.toString())
+        System.setProperty("signed.short", expectedConfig.short.toString())
+        System.setProperty("signed.long", expectedConfig.long.toString())
+
+        System.setProperty("double", expectedConfig.double.toString())
+        System.setProperty("float", expectedConfig.float.toString())
+
+        System.setProperty("boolean", expectedConfig.boolean.toString())
 
         val config = TestConfigDeclaration.load(SystemPropertiesKonfiguration())
 

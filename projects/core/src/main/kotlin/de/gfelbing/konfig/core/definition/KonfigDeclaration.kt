@@ -31,22 +31,46 @@ abstract class KonfigDeclaration {
     fun <T> Parameter<T?>.secret() = SecretParameter(this)
 
     /**
-     * Factory method for a [StringParameter] which is transformed to [Double].
+     * Factory method for a [StringParameter] which is transformed to [Int].
      */
-    fun double(vararg path: String) = TransformedParameter(string(*path), "Double", { it?.toDouble() })
+    fun int(vararg path: String) = TransformedParameter(string(*path), "Int") { it?.toInt() }
 
+    /**
+     * Factory method for a [StringParameter] which is transformed to [Byte].
+     */
+    fun byte(vararg path: String) = TransformedParameter(string(*path), "Byte") { it?.toByte() }
+
+    /**
+     * Factory method for a [StringParameter] which is transformed to [Short].
+     */
+    fun short(vararg path: String) = TransformedParameter(string(*path), "Short") { it?.toShort() }
 
     /**
      * Factory method for a [StringParameter] which is transformed to [Long].
      */
-    fun long(vararg path: String) = TransformedParameter(string(*path), "Long", { it?.toLong() })
-
+    fun long(vararg path: String) = TransformedParameter(string(*path), "Long") { it?.toLong() }
 
     /**
-     * Factory method for a [StringParameter] which is transformed to [Int].
+     * Factory method for a [StringParameter] which is transformed to [Float].
      */
-    fun int(vararg path: String) = TransformedParameter(string(*path), "Int", { it?.toInt() })
+    fun float(vararg path: String) = TransformedParameter(string(*path), "Float") { it?.toFloat() }
 
+    /**
+     * Factory method for a [StringParameter] which is transformed to [Double].
+     */
+    fun double(vararg path: String) = TransformedParameter(string(*path), "Double") { it?.toDouble() }
+
+    /**
+     * Factory method for a [StringParameter] which is transformed to [Double].
+     */
+    fun boolean(vararg path: String) = TransformedParameter(string(*path), "Boolean") { it?.toBoolean() }
+
+    /**
+     * Factory method for a list parameter.
+     */
+    fun <T> list(vararg path: String, separator: String = ",") = TransformedParameter(string(*path), "List") {
+        it?.split(separator)?.map(String::trim)
+    }
 
     /**
      * Factory method for a [StringParameter].

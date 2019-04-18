@@ -8,7 +8,7 @@ To use konfig in your gradle project, add the following dependencies:
 
 ```
 dependencies {
-    implementation "de.gfelbing:konfig:0.0.1"
+    implementation "de.gfelbing:konfig:0.1.0"
 }
 ```
 
