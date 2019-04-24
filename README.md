@@ -7,8 +7,12 @@ Lightweight configuration framework for kotlin
 To use konfig in your gradle project, add the following dependencies:
 
 ```
+repositories {
+    jcenter()
+}
+
 dependencies {
-    implementation "de.gfelbing:konfig:0.1.0"
+    implementation 'de.gfelbing:konfig-core:0.1.0'
 }
 ```
 
