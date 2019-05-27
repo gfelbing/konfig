@@ -53,16 +53,11 @@ class PropertiesFileKonfiguration(val fileName: String, val input: () -> InputSt
          */
         fun getInputStream(filePath: String): InputStream {
             // First, try to load the file from the file system
-            if (File(filePath).exists()) {
-                return File(filePath).inputStream()
-            }
-            // If this fails, it may be bundled in a jar
-            val systemResourceAsStream = ClassLoader.getSystemResourceAsStream(filePath)
-            if (systemResourceAsStream != null) {
-                return systemResourceAsStream
-            }
-            // Otherwise, fail.
-            throw KonfigException("Unable to load property file '$filePath'.")
+            return File(filePath).takeIf { it.exists() }?.inputStream()
+                // If this fails, it may be bundled in a jar
+                ?: ClassLoader.getSystemResourceAsStream(filePath)
+                // Otherwise, fail.
+                ?: throw KonfigException("")
         }
     }
 }

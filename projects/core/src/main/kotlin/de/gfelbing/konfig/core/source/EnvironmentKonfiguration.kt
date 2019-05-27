@@ -22,6 +22,7 @@ import de.gfelbing.konfig.core.log.Log
  * Reads values from environment variables.
  */
 class EnvironmentKonfiguration(override val LOG: Log = Sources.DEFAULT_LOG) : KonfigurationSource {
+
     /**
      * Reads the environment variable using the naming convention from [toEnvName].
      */

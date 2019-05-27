@@ -22,6 +22,7 @@ import de.gfelbing.konfig.core.log.StdoutLog
  * Utility for [KonfigurationSource]s.
  */
 object Sources {
+
     /**
      * The default log used by the [KonfigurationSource]s.
      */

@@ -23,11 +23,12 @@ import java.util.*
  * Abstract [KonfigurationSource] based on [Properties]. E.g. [PropertiesFileKonfiguration], [SystemPropertiesKonfiguration].
  */
 abstract class PropertiesKonfiguration(val properties: Properties = Properties(), override val LOG: Log = Sources.DEFAULT_LOG) : KonfigurationSource {
+
     /**
      * Reads a value from [properties] using the naming convention from [toPropertyName].
      */
     override fun getOptionalString(path: List<String>): String? {
-        return properties[toPropertyName(path)]?.let { it as String } // FIXME unchecked cast? Rather use toString?
+        return properties[toPropertyName(path)]?.let { it as? String } // FIXME checked cast? Rather use toString?
     }
 
     /**
