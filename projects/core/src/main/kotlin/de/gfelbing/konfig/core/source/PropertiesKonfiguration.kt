@@ -27,9 +27,7 @@ abstract class PropertiesKonfiguration(val properties: Properties = Properties()
     /**
      * Reads a value from [properties] using the naming convention from [toPropertyName].
      */
-    override fun getOptionalString(path: List<String>): String? {
-        return properties[toPropertyName(path)]?.let { it as? String } // FIXME checked cast? Rather use toString?
-    }
+    override fun getOptionalString(path: List<String>): String? = properties.getProperty(toPropertyName(path))
 
     /**
      * Generates a descriptive string used for logging.
