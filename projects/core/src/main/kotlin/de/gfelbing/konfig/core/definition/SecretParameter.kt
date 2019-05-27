@@ -25,7 +25,12 @@ class SecretParameter<T>(val parent: Parameter<T>) : Parameter<T> {
     /**
      * Delegates invocation to [parent], overriding the descriptive value by 'SECRET'.
      */
-    override fun invoke(source: KonfigurationSource) = parent(source).copy(second = "SECRET")
+    override fun readFrom(source: KonfigurationSource): T = parent.readFrom(source)
+
+    /**
+     * Hide any incoming value from evil loggers' eyes.
+     */
+    override fun toLoggingString(value: T?) = SECRET_LITERAL
 
     /**
      * Adds the property 'secret' to [parent] description.
@@ -33,6 +38,10 @@ class SecretParameter<T>(val parent: Parameter<T>) : Parameter<T> {
     override fun description(): ParameterDescription {
         val desc = parent.description()
         return desc.copy(props = desc.props + "secret")
+    }
+
+    companion object {
+        const val SECRET_LITERAL = "SECRET"
     }
 }
 

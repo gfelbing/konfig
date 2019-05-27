@@ -26,10 +26,7 @@ class TransformedParameter<V, T>(val parent: Parameter<V>, val typeName: String,
     /**
      * Invokes [parent] and applies the [transform] the the value.
      */
-    override fun invoke(source: KonfigurationSource) = parent(source).let { (value, _) ->
-        val transformedValue = transform(value)
-        Pair(transformedValue, transformedValue?.let { "'$it'" } ?: "NULL")
-    }
+    override fun readFrom(source: KonfigurationSource): T = transform(parent.readFrom(source))
 
     /**
      * Overrides the type of the [parent] description.

@@ -25,10 +25,8 @@ class RequiredParameter<T>(val optionalParameter: Parameter<T?>) : Parameter<T> 
     /**
      * Delegates the invocation to the [optionalParameter] and throws a [KonfigException] if the value is unset.
      */
-    override fun invoke(source: KonfigurationSource) = optionalParameter(source).let { (value, logValue) ->
-        val nonNullValue = value ?: throw KonfigException("Unable to load required parameter ${this.description()}")
-        nonNullValue to logValue
-    }
+    override fun readFrom(source: KonfigurationSource): T = optionalParameter.readFrom(source)
+        ?: throw KonfigException("Unable to load required parameter ${this.description()}")
 
     /**
      * Adds the property 'required' to the parent description.

@@ -48,12 +48,12 @@ interface KonfigurationSource {
 
         LOG.info(listOfNotNull(
                 desc.path.joinToString(".", "config:"),
-                value.second.let { "value:$it" },
+                "value:${parameter.toLoggingString(value)}",
                 "type:${desc.typeName}",
                 desc.props.joinToString(", ", "props:[", "]"),
                 describe(desc.path)?.let { "source:$it" }
         ).joinToString(", "))
 
-        return value.first
+        return value
     }
 }
