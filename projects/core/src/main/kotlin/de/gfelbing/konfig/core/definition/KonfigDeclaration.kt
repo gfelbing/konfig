@@ -75,6 +75,6 @@ abstract class KonfigDeclaration {
     /**
      * Factory method for a [StringParameter].
      */
-    fun string(vararg path: String) = StringParameter(path.asList())
+    fun string(vararg path: String) = StringParameter(path.toList())
 }
 

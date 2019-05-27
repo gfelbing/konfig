@@ -25,9 +25,7 @@ class SecretParameter<T>(val parent: Parameter<T>) : Parameter<T> {
     /**
      * Delegates invocation to [parent], overriding the descriptive value by 'SECRET'.
      */
-    override fun invoke(source: KonfigurationSource) = parent(source).let { (value, _) ->
-        Pair(value, "SECRET")
-    }
+    override fun invoke(source: KonfigurationSource) = parent(source).copy(second = "SECRET")
 
     /**
      * Adds the property 'secret' to [parent] description.

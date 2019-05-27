@@ -34,8 +34,5 @@ class TransformedParameter<V, T>(val parent: Parameter<V>, val typeName: String,
     /**
      * Overrides the type of the [parent] description.
      */
-    override fun description(): ParameterDescription {
-        val parentDescription = parent.description()
-        return parentDescription.copy(typeName = typeName)
-    }
+    override fun description() = parent.description().copy(typeName = typeName)
 }

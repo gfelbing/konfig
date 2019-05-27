@@ -26,25 +26,6 @@ import java.io.InputStream
  */
 class PropertiesFileKonfiguration(val fileName: String, val input: () -> InputStream, override val LOG: Log = Sources.DEFAULT_LOG) : PropertiesKonfiguration() {
 
-    companion object {
-        /**
-         * Creates an [InputStream] for the given [fileName].
-         */
-        fun getInputStream(filePath: String): InputStream {
-            // First, try to load the file from the file system
-            if (File(filePath).exists()) {
-                return File(filePath).inputStream()
-            }
-            // If this fails, it may be bundled in a jar
-            val systemResourceAsStream = ClassLoader.getSystemResourceAsStream(filePath)
-            if (systemResourceAsStream != null) {
-                return systemResourceAsStream
-            }
-            // Otherwise, fail.
-            throw KonfigException("Unable to load property file '$filePath'.")
-        }
-    }
-
     constructor(filePath: String) : this(filePath, { getInputStream(filePath) })
 
     /**
@@ -65,4 +46,23 @@ class PropertiesFileKonfiguration(val fileName: String, val input: () -> InputSt
      * Generates a descriptive string used for logging.
      */
     override fun describe(path: List<String>) = "PROPERTY($fileName, ${toPropertyName(path)})"
+
+    companion object {
+        /**
+         * Creates an [InputStream] for the given [fileName].
+         */
+        fun getInputStream(filePath: String): InputStream {
+            // First, try to load the file from the file system
+            if (File(filePath).exists()) {
+                return File(filePath).inputStream()
+            }
+            // If this fails, it may be bundled in a jar
+            val systemResourceAsStream = ClassLoader.getSystemResourceAsStream(filePath)
+            if (systemResourceAsStream != null) {
+                return systemResourceAsStream
+            }
+            // Otherwise, fail.
+            throw KonfigException("Unable to load property file '$filePath'.")
+        }
+    }
 }

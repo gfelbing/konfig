@@ -20,21 +20,21 @@ import de.gfelbing.konfig.core.log.Log
 import de.gfelbing.konfig.core.source.Sources.DEFAULT_LOG
 
 /**
- * Chaines multiple [KonfigurationSource]s.
+ * Chains multiple [KonfigurationSource]s.
  * The first configuration which yields a value is chosen.
  */
 class ChainedKonfiguration(val sources: List<KonfigurationSource>, override val LOG: Log = DEFAULT_LOG) : KonfigurationSource {
 
-    constructor(vararg sources: KonfigurationSource) : this(sources.asList())
+    constructor(vararg sources: KonfigurationSource) : this(sources.toList())
 
-    override fun getOptionalString(path: List<String>) = sources
-            .asSequence()
-            .map { it.getOptionalString(path) }
-            .filterNotNull()
+    override fun getOptionalString(path: List<String>) =
+        sources.asSequence()
+            .mapNotNull { it.getOptionalString(path) }
             .firstOrNull()
 
-    override fun describe(path: List<String>): String? = sources
-            .asSequence()
-            .find { it.getOptionalString(path) != null }
-            ?.let { it.describe(path) }
+    override fun describe(path: List<String>): String? =
+        sources.asSequence()
+            .filter { it.getOptionalString(path) != null }
+            .firstOrNull()
+            ?.describe(path)
 }
