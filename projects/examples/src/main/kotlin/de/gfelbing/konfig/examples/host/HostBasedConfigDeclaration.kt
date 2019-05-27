@@ -16,10 +16,11 @@
 
 package de.gfelbing.konfig.examples.host
 
-import de.gfelbing.konfig.core.definition.KonfigDeclaration
+import de.gfelbing.konfig.core.definition.KonfigDeclaration.string
+import de.gfelbing.konfig.core.definition.KonfigDeclaration.required
 import de.gfelbing.konfig.core.source.KonfigurationSource
 
-object HostBasedConfigDeclaration : KonfigDeclaration() {
+object HostBasedConfigDeclaration {
     val valueA = string("value", "a").required()
     val valueB = string("value", "b").required()
 

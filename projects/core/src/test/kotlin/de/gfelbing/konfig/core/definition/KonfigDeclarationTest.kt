@@ -16,6 +16,16 @@
 
 package de.gfelbing.konfig.core.definition
 
+import de.gfelbing.konfig.core.definition.KonfigDeclaration.string
+import de.gfelbing.konfig.core.definition.KonfigDeclaration.double
+import de.gfelbing.konfig.core.definition.KonfigDeclaration.long
+import de.gfelbing.konfig.core.definition.KonfigDeclaration.int
+import de.gfelbing.konfig.core.definition.KonfigDeclaration.byte
+import de.gfelbing.konfig.core.definition.KonfigDeclaration.short
+import de.gfelbing.konfig.core.definition.KonfigDeclaration.float
+import de.gfelbing.konfig.core.definition.KonfigDeclaration.boolean
+import de.gfelbing.konfig.core.definition.KonfigDeclaration.secret
+import de.gfelbing.konfig.core.definition.KonfigDeclaration.required
 import de.gfelbing.konfig.core.source.KonfigurationSource
 import de.gfelbing.konfig.core.source.SystemPropertiesKonfiguration
 import org.hamcrest.MatcherAssert.assertThat
@@ -24,7 +34,7 @@ import org.testng.annotations.Test
 
 class KonfigDeclarationTest {
 
-    object TestConfigDeclaration : KonfigDeclaration() {
+    object TestConfigDeclaration {
         val optionalDouble = double("optional", "double")
         val optionalString = string("optional", "string")
         val requiredLong = long("required", "long").required()

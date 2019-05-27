@@ -17,9 +17,9 @@
 package de.gfelbing.konfig.core.definition
 
 /**
- * Abstract class for declarations, holding convenience methods.
+ * Base object for declarations, holding convenience methods.
  */
-abstract class KonfigDeclaration {
+object KonfigDeclaration {
     /**
      * Extends [Parameter] to convert it into a non-null [RequiredParameter].
      */
