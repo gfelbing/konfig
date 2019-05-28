@@ -45,13 +45,15 @@ interface KonfigurationSource {
     operator fun <T> get(parameter: Parameter<T>): T {
         val desc = parameter.description()
         val value = parameter(this)
-        LOG.info(listOf(
+
+        LOG.info(listOfNotNull(
                 desc.path.joinToString(".", "config:"),
-                value.second.let { "value:$it" },
+                "value:${parameter.toLoggingString(value)}",
                 "type:${desc.typeName}",
                 desc.props.joinToString(", ", "props:[", "]"),
                 describe(desc.path)?.let { "source:$it" }
-        ).filterNotNull().joinToString(", "))
-        return value.first
+        ).joinToString(", "))
+
+        return value
     }
 }

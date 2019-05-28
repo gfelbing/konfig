@@ -17,9 +17,9 @@
 package de.gfelbing.konfig.core.definition
 
 /**
- * Abstract class for declarations, holding convenience methods.
+ * Base object for declarations, holding convenience methods.
  */
-abstract class KonfigDeclaration {
+object KonfigDeclaration {
     /**
      * Extends [Parameter] to convert it into a non-null [RequiredParameter].
      */
@@ -75,6 +75,6 @@ abstract class KonfigDeclaration {
     /**
      * Factory method for a [StringParameter].
      */
-    fun string(vararg path: String) = StringParameter(path.asList())
+    fun string(vararg path: String) = StringParameter(path.toList())
 }
 

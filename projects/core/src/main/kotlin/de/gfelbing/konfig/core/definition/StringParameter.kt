@@ -26,9 +26,7 @@ class StringParameter(val path: List<String>) : Parameter<String?> {
     /**
      * Reads the value from [source] and generates a descriptive value.
      */
-    override fun invoke(source: KonfigurationSource) = source.getOptionalString(path).let {
-        Pair(it, it?.let { "'$it'" } ?: "NULL")
-    }
+    override fun readFrom(source: KonfigurationSource): String? = source.getOptionalString(path)
 
     /**
      * Returns the [ParameterDescription] of this parameter.

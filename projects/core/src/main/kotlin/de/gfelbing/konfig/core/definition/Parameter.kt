@@ -26,10 +26,30 @@ interface Parameter<T> {
     /**
      * Returns a pair containing the parameter value and a descriptive value which can be used for logging.
      */
-    operator fun invoke(source: KonfigurationSource): Pair<T, String>
+    fun readFrom(source: KonfigurationSource): T
 
     /**
      * The [ParameterDescription] of this parameter.
      */
     fun description(): ParameterDescription
+
+    /**
+     * Wraps a retained value into an appropriate string representation for logging.
+     * Can be used to override secret value behaviour for example.
+     */
+    fun toLoggingString(value: T?): String = value.toDefaultLoggingString()
+
+    /**
+     * Convenience shorthand for obtaining the value of this [Parameter]
+     * from a given [KonfigurationSource].
+     */
+    operator fun invoke(source: KonfigurationSource): T = readFrom(source)
+
+    companion object {
+        const val NULL_LITERAL = "NULL"
+
+        fun <T> T?.toDefaultLoggingString(): String {
+            return this?.let { "'$it'" } ?: NULL_LITERAL
+        }
+    }
 }

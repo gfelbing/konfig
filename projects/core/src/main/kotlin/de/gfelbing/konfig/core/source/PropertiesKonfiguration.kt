@@ -25,19 +25,19 @@ import java.util.*
 abstract class PropertiesKonfiguration(val properties: Properties = Properties(), override val LOG: Log = Sources.DEFAULT_LOG) : KonfigurationSource {
 
     /**
-     * Generates the property name by joining the lowercase path elements with '.'.
-     */
-    fun toPropertyName(path: List<String>) = path.map { it.toLowerCase() }.joinToString(".")
-
-    /**
      * Reads a value from [properties] using the naming convention from [toPropertyName].
      */
-    override fun getOptionalString(path: List<String>): String? {
-        return properties[toPropertyName(path)]?.let { it as String }
-    }
+    override fun getOptionalString(path: List<String>): String? = properties.getProperty(toPropertyName(path))
 
     /**
      * Generates a descriptive string used for logging.
      */
     override fun describe(path: List<String>): String = "PROPERTY(${toPropertyName(path)})"
+
+    companion object {
+        /**
+         * Generates the property name by joining the lowercase path elements with '.'.
+         */
+        fun toPropertyName(path: List<String>) = path.joinToString(".") { it.toLowerCase() }
+    }
 }

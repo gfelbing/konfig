@@ -16,7 +16,12 @@
 
 package de.gfelbing.konfig.examples.hello
 
-import de.gfelbing.konfig.core.definition.KonfigDeclaration
+import de.gfelbing.konfig.core.definition.KonfigDeclaration.double
+import de.gfelbing.konfig.core.definition.KonfigDeclaration.int
+import de.gfelbing.konfig.core.definition.KonfigDeclaration.long
+import de.gfelbing.konfig.core.definition.KonfigDeclaration.string
+import de.gfelbing.konfig.core.definition.KonfigDeclaration.required
+import de.gfelbing.konfig.core.definition.KonfigDeclaration.secret
 import de.gfelbing.konfig.core.source.KonfigurationSource
 
 /**
@@ -24,7 +29,7 @@ import de.gfelbing.konfig.core.source.KonfigurationSource
  *
  * @author gfelbing@github.com
  */
-object MyConfigDeclaration : KonfigDeclaration() {
+object MyConfigDeclaration {
     val requiredString = string("required", "string").required()
     val optionalString = string("optional", "string")
     val optionalInt = int("optional", "int")

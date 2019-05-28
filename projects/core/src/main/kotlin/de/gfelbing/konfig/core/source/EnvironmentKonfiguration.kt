@@ -22,18 +22,21 @@ import de.gfelbing.konfig.core.log.Log
  * Reads values from environment variables.
  */
 class EnvironmentKonfiguration(override val LOG: Log = Sources.DEFAULT_LOG) : KonfigurationSource {
-    /**
-     * Generates the environment variable name from the path by joining uppercased elements by '_'.
-     */
-    fun toEnvName(path: List<String>) = path.map { it.toUpperCase() }.joinToString("_")
 
     /**
      * Reads the environment variable using the naming convention from [toEnvName].
      */
-    override fun getOptionalString(path: List<String>) = System.getenv(toEnvName(path))
+    override fun getOptionalString(path: List<String>): String? = System.getenv(toEnvName(path))
 
     /**
      * Generates a source description.
      */
     override fun describe(path: List<String>) = "ENV(${toEnvName(path)})"
+
+    companion object {
+        /**
+         * Generates the environment variable name from the path by joining uppercased elements by '_'.
+         */
+        fun toEnvName(path: List<String>) = path.joinToString("_") { it.toUpperCase() }
+    }
 }

@@ -17,7 +17,7 @@
 package de.gfelbing.konfig.core.log
 
 object StdoutLog : Log {
-    val isDebug = System.getenv("KONFIG_DEBUG")?.let { it.toLowerCase() == "true" } ?: false
+    val isDebug = System.getenv("KONFIG_DEBUG")?.toBoolean() ?: false
 
     override fun debug(msg: String) {
         if (isDebug) {
