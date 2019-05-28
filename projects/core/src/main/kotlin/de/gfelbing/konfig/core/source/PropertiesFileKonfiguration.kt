@@ -57,7 +57,7 @@ class PropertiesFileKonfiguration(val fileName: String, val input: () -> InputSt
                 // If this fails, it may be bundled in a jar
                 ?: ClassLoader.getSystemResourceAsStream(filePath)
                 // Otherwise, fail.
-                ?: throw KonfigException("")
+                ?: throw KonfigException("Unable to load property file '$filePath'.")
         }
     }
 }
