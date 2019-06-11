@@ -27,4 +27,10 @@ object Sources {
      * The default log used by the [KonfigurationSource]s.
      */
     var DEFAULT_LOG = StdoutLog
+
+    /**
+     * Extend a configuration over a certain namespace.
+     * Factory method for [NamespacedKonfiguration].
+     */
+    fun KonfigurationSource.withNamespace(vararg namespace: String) = NamespacedKonfiguration(this, *namespace, LOG = this.LOG)
 }
