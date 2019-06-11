@@ -28,6 +28,7 @@ import de.gfelbing.konfig.core.definition.KonfigDeclaration.secret
 import de.gfelbing.konfig.core.definition.KonfigDeclaration.required
 import de.gfelbing.konfig.core.definition.KonfigDeclaration.default
 import de.gfelbing.konfig.core.definition.KonfigDeclaration.lazyDefault
+import de.gfelbing.konfig.core.definition.KonfigDeclaration.enum
 import de.gfelbing.konfig.core.source.KonfigurationSource
 import de.gfelbing.konfig.core.source.SystemPropertiesKonfiguration
 import org.hamcrest.MatcherAssert.assertThat
@@ -35,6 +36,10 @@ import org.hamcrest.Matchers.`is`
 import org.testng.annotations.Test
 
 class KonfigDeclarationTest {
+
+    enum class Dummy {
+        FOO, BAR, BAZ
+    }
 
     object TestConfigDeclaration {
         val optionalDouble = double("optional", "double")
@@ -55,6 +60,9 @@ class KonfigDeclarationTest {
         val defaultString = string("default", "string").default("maybe")
         val defaultLazyInt = int("default", "int").lazyDefault { 40 + 2 }
 
+        val dummy = enum<Dummy>("dummy").required()
+        val dummyNullable = enum<Dummy>("dummy", "nullable")
+
         fun load(source: KonfigurationSource) = TestConfig(
                 optionalDouble = source[optionalDouble],
                 optionalString = source[optionalString],
@@ -68,7 +76,9 @@ class KonfigDeclarationTest {
                 float = source[float],
                 boolean = source[boolean],
                 defaultString = source[defaultString],
-                defaultLazyInt = source[defaultLazyInt]
+                defaultLazyInt = source[defaultLazyInt],
+                dummy = source[dummy],
+                dummyNullable = source[dummyNullable]
         )
     }
 
@@ -85,7 +95,9 @@ class KonfigDeclarationTest {
             val float: Float?,
             val boolean: Boolean?,
             val defaultString: String,
-            val defaultLazyInt: Int
+            val defaultLazyInt: Int,
+            val dummy: Dummy,
+            val dummyNullable: Dummy?
     )
 
     @Test
@@ -103,7 +115,9 @@ class KonfigDeclarationTest {
                 float = 2.3F,
                 boolean = true,
                 defaultString = "maybe",
-                defaultLazyInt = 42
+                defaultLazyInt = 42,
+                dummy = Dummy.FOO,
+                dummyNullable = Dummy.BAR
         )
 
         System.setProperty("optional.double", expectedConfig.optionalDouble.toString())
@@ -124,6 +138,9 @@ class KonfigDeclarationTest {
         
         // System.setProperty("default.string", expectedConfig.defaultString)
         // System.setProperty("default.int", expectedConfig.defaultLazyInt.toString())
+
+        System.setProperty("dummy", expectedConfig.dummy.name)
+        System.setProperty("dummy.nullable", expectedConfig.dummyNullable?.name.toString())
 
         val config = TestConfigDeclaration.load(SystemPropertiesKonfiguration())
 
