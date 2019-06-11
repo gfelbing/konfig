@@ -26,6 +26,16 @@ object KonfigDeclaration {
     fun <T> Parameter<T?>.required() = RequiredParameter(this)
 
     /**
+     * Extends [Parameter] to convert it into a [DefaultComputationParameter] with the provided default value getter.
+     */
+    fun <T> Parameter<T?>.lazyDefault(defaultGetter: () -> T) = DefaultComputationParameter(this, defaultGetter)
+
+    /**
+     * Extends [Parameter] to convert it into a [DefaultValueParameter] with the provided default constant value.
+     */
+    fun <T> Parameter<T?>.default(defaultValue: T) = DefaultValueParameter(this, defaultValue)
+
+    /**
      * Extends [Parameter] to convert it into a [SecretParameter].
      */
     fun <T> Parameter<T?>.secret() = SecretParameter(this)
