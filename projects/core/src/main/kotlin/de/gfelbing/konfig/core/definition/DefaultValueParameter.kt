@@ -17,18 +17,19 @@
 package de.gfelbing.konfig.core.definition
 
 /**
- * Transforms a nullable parameter into an non-null parameter by assertion at invokation.
+ * Transforms a nullable parameter into an non-null parameter by assuming a static default value.
  */
-class RequiredParameter<T>(optionalParameter: Parameter<T?>) : WrappedOptionalParameter<T>(optionalParameter) {
+class DefaultValueParameter<T>(optionalParameter: Parameter<T?>, val default: T) : WrappedOptionalParameter<T>(optionalParameter) {
     /**
-     * Throws a [KonfigException] if the value is unset.
+     * Yields the static default value.
      */
-    override fun handleAbsentParameter() =
-        throw KonfigException("Unable to load required parameter ${this.description()}")
+    override fun handleAbsentParameter() = default
 
     /**
-     * Adds a tag to the parameter description indicating that this parameter is required.
+     * Adds a tag to the description indicating that a default value is being used.
+     *
+     * This default value is wrapped inside the logging habits of the wrapped parameter,
+     * such that i.e. secret parameters get masked accordingly.
      */
-    override val additionalDescriptionProperties = listOf("required")
+    override val additionalDescriptionProperties = listOf("default:${toLoggingString(default)}")
 }
-
