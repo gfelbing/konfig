@@ -94,6 +94,15 @@ object KonfigDeclaration {
     }
 
     /**
+     * Factory method for an enum parameter.
+     *
+     * Inlined in order to be able to reify the type of <E> at runtime.
+     */
+    inline fun <reified E: Enum<E>> enum(vararg path: String) = TransformedParameter(string(*path), "Enum:${E::class}") {
+        it?.let { name -> enumValueOf<E>(name) }
+    }
+
+    /**
      * Factory method for a [StringParameter].
      */
     fun string(vararg path: String) = StringParameter(path.toList())
