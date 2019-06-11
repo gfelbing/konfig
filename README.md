@@ -12,7 +12,7 @@ repositories {
 }
 
 dependencies {
-    implementation 'de.gfelbing:konfig-core:0.2.1'
+    implementation 'de.gfelbing:konfig-core:0.3.0'
 }
 ```
 

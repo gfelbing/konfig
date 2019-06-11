@@ -1,7 +1,7 @@
 apply plugin: 'com.jfrog.bintray'
 apply plugin: 'maven-publish'
 
-def publishVersion = "0.2.1"
+def publishVersion = "0.3.0"
 def githubRepo = "https://github.com/gfelbing/konfig"
 
 bintray {
