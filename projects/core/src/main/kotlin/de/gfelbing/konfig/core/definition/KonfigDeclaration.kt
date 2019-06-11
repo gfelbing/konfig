@@ -28,7 +28,7 @@ object KonfigDeclaration {
     /**
      * Extends [Parameter] to convert it into a [SecretParameter].
      */
-    fun <T> Parameter<T?>.secret() = SecretParameter(this)
+    fun <T> Parameter<T>.secret() = SecretParameter(this)
 
     /**
      * Factory method for a [StringParameter] which is transformed to [Int].
