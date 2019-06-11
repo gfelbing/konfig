@@ -25,7 +25,7 @@ import de.gfelbing.konfig.core.source.Sources.DEFAULT_LOG
  */
 class ChainedKonfiguration(val sources: List<KonfigurationSource>, override val LOG: Log = DEFAULT_LOG) : KonfigurationSource {
 
-    constructor(vararg sources: KonfigurationSource) : this(sources.toList())
+    constructor(vararg sources: KonfigurationSource, log: Log = DEFAULT_LOG) : this(sources.toList(), log)
 
     override fun getOptionalString(path: List<String>) =
         sources.asSequence()

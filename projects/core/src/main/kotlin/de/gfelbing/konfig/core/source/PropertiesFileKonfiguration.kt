@@ -26,7 +26,7 @@ import java.io.InputStream
  */
 class PropertiesFileKonfiguration(val fileName: String, val input: () -> InputStream, override val LOG: Log = Sources.DEFAULT_LOG) : PropertiesKonfiguration() {
 
-    constructor(filePath: String) : this(filePath, { getInputStream(filePath) })
+    constructor(filePath: String, log: Log = Sources.DEFAULT_LOG) : this(filePath, { getInputStream(filePath) }, log)
 
     /**
      * Initial update of the properties.
