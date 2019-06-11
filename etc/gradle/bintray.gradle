@@ -9,6 +9,7 @@ bintray {
     key = this.properties['bintray.api.key'] ?: "BINTRAY_API_KEY"
 
     publications = ['bintray']
+    publish = true
 
     pkg {
         repo = 'maven'
