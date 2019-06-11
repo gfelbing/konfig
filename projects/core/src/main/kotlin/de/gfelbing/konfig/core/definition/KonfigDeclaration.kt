@@ -20,6 +20,8 @@ package de.gfelbing.konfig.core.definition
  * Base object for declarations, holding convenience methods.
  */
 object KonfigDeclaration {
+    const val DEFAULT_SEPARATOR = ","
+
     /**
      * Extends [Parameter] to convert it into a non-null [RequiredParameter].
      */
@@ -68,8 +70,17 @@ object KonfigDeclaration {
     /**
      * Factory method for a list parameter.
      */
-    fun <T> list(vararg path: String, separator: String = ",") = TransformedParameter(string(*path), "List") {
+    fun list(vararg path: String, separator: String = DEFAULT_SEPARATOR) = TransformedParameter(string(*path), "List") {
         it?.split(separator)?.map(String::trim)
+    }
+
+    /**
+     * Factory method for a set parameter.
+     *
+     * Essentially just converts [list] into a [Set].
+     */
+    fun set(vararg path: String, separator: String = DEFAULT_SEPARATOR) = TransformedParameter(list(*path, separator), "Set") {
+        it?.toSet()
     }
 
     /**
