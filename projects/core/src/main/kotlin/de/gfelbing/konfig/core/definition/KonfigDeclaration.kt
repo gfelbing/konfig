@@ -89,7 +89,7 @@ object KonfigDeclaration {
      *
      * Essentially just converts [list] into a [Set].
      */
-    fun set(vararg path: String, separator: String = DEFAULT_SEPARATOR) = TransformedParameter(list(*path, separator), "Set") {
+    fun set(vararg path: String, separator: String = DEFAULT_SEPARATOR) = TransformedParameter(list(*path, separator = separator), "Set") {
         it?.toSet()
     }
 

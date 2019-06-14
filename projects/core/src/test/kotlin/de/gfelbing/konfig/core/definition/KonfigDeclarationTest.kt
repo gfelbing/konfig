@@ -29,6 +29,8 @@ import de.gfelbing.konfig.core.definition.KonfigDeclaration.required
 import de.gfelbing.konfig.core.definition.KonfigDeclaration.default
 import de.gfelbing.konfig.core.definition.KonfigDeclaration.lazyDefault
 import de.gfelbing.konfig.core.definition.KonfigDeclaration.enum
+import de.gfelbing.konfig.core.definition.KonfigDeclaration.list
+import de.gfelbing.konfig.core.definition.KonfigDeclaration.set
 import de.gfelbing.konfig.core.source.KonfigurationSource
 import de.gfelbing.konfig.core.source.SystemPropertiesKonfiguration
 import org.hamcrest.MatcherAssert.assertThat
@@ -63,6 +65,9 @@ class KonfigDeclarationTest {
         val dummy = enum<Dummy>("dummy").required()
         val dummyNullable = enum<Dummy>("dummy", "nullable")
 
+        val orderedEntries = list("ordered", "entries").required()
+        val unorderedEntries = set("unordered", "entries").required()
+
         fun load(source: KonfigurationSource) = TestConfig(
                 optionalDouble = source[optionalDouble],
                 optionalString = source[optionalString],
@@ -78,7 +83,9 @@ class KonfigDeclarationTest {
                 defaultString = source[defaultString],
                 defaultLazyInt = source[defaultLazyInt],
                 dummy = source[dummy],
-                dummyNullable = source[dummyNullable]
+                dummyNullable = source[dummyNullable],
+                orderedEntries = source[orderedEntries],
+                unorderedEntries = source[unorderedEntries]
         )
     }
 
@@ -97,7 +104,9 @@ class KonfigDeclarationTest {
             val defaultString: String,
             val defaultLazyInt: Int,
             val dummy: Dummy,
-            val dummyNullable: Dummy?
+            val dummyNullable: Dummy?,
+            val orderedEntries: List<String>,
+            val unorderedEntries: Set<String>
     )
 
     @Test
@@ -117,7 +126,9 @@ class KonfigDeclarationTest {
                 defaultString = "maybe",
                 defaultLazyInt = 42,
                 dummy = Dummy.FOO,
-                dummyNullable = Dummy.BAR
+                dummyNullable = Dummy.BAR,
+                orderedEntries = listOf("some", "ordered", "elements"),
+                unorderedEntries = setOf("unordered", "some", "elements")
         )
 
         System.setProperty("optional.double", expectedConfig.optionalDouble.toString())
@@ -141,6 +152,9 @@ class KonfigDeclarationTest {
 
         System.setProperty("dummy", expectedConfig.dummy.name)
         System.setProperty("dummy.nullable", expectedConfig.dummyNullable?.name.toString())
+
+        System.setProperty("ordered.entries", expectedConfig.orderedEntries.joinToString(","))
+        System.setProperty("unordered.entries", expectedConfig.unorderedEntries.joinToString(","))
 
         val config = TestConfigDeclaration.load(SystemPropertiesKonfiguration())
 
