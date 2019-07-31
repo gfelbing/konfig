@@ -28,13 +28,13 @@ class ChainedKonfiguration(val sources: List<KonfigurationSource>, override val 
     constructor(vararg sources: KonfigurationSource, log: Log = DEFAULT_LOG) : this(sources.toList(), log)
 
     override fun getOptionalString(path: List<String>) =
-        sources.asSequence()
-            .mapNotNull { it.getOptionalString(path) }
-            .firstOrNull()
+        findSource(path)?.first
 
     override fun describe(path: List<String>): String? =
+        findSource(path)?.second?.describe(path)
+
+    private fun findSource(path: List<String>) =
         sources.asSequence()
-            .filter { it.getOptionalString(path) != null }
+            .mapNotNull { it.getOptionalString(path)?.to(it) }
             .firstOrNull()
-            ?.describe(path)
 }
