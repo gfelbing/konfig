@@ -32,8 +32,7 @@ class NamespacedKonfiguration(val originalSource: KonfigurationSource, vararg va
     override fun getOptionalString(path: List<String>) =
         originalSource.getOptionalString(namespacedPath(path))
 
-    override fun describe(path: List<String>) =
-        originalSource.describe(namespacedPath(path))
+    override fun describe(path: List<String>) = "NAMESPACE($namespace, ${originalSource.describe(path)})"
 
     /**
      * Append the actual request path to the general namespace of this source.
