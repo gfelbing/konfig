@@ -17,6 +17,7 @@
 package de.gfelbing.konfig.core.source
 
 import de.gfelbing.konfig.core.definition.Parameter
+import de.gfelbing.konfig.core.definition.ParameterDescription
 import de.gfelbing.konfig.core.log.Log
 
 /**
@@ -44,16 +45,25 @@ interface KonfigurationSource {
      */
     operator fun <T> get(parameter: Parameter<T>): T {
         val desc = parameter.description()
-        val value = parameter(this)
 
+        try {
+            return parameter(this).also {
+                desc.logLoadEvent("value:${parameter.toLoggingString(it)}")
+            }
+        } catch (e: Exception) {
+            throw e.also {
+                desc.logLoadEvent("error:${it.message}")
+            }
+        }
+    }
+
+    private fun ParameterDescription.logLoadEvent(resultMessage: String) {
         LOG.info(listOfNotNull(
-                desc.path.joinToString(".", "config:"),
-                "value:${parameter.toLoggingString(value)}",
-                "type:${desc.typeName}",
-                desc.props.joinToString(", ", "props:[", "]"),
-                describe(desc.path)?.let { "source:$it" }
+            path.joinToString(".", "config:"),
+            resultMessage,
+            "type:$typeName",
+            props.joinToString(", ", "props:[", "]"),
+            describe(path)?.let { "source:$it" }
         ).joinToString(", "))
-
-        return value
     }
 }
