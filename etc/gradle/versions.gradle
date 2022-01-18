@@ -4,7 +4,7 @@ def groupedVersions = [
 
 ext.versions = [
         'org.jetbrains.kotlin:kotlin-stdlib-jdk8': groupedVersions['kotlin'],
-        'org.testng:testng'                      : '6.14.3',
+        'org.testng:testng'                      : '7.5',
         'org.hamcrest:hamcrest-all'              : '1.3',
 
 ]
