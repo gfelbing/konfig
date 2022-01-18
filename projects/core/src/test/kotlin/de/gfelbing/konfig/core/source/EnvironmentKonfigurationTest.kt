@@ -26,7 +26,7 @@ class EnvironmentKonfigurationTest {
     @Test
     fun testRead() {
         val entry = System.getenv().entries.first()
-        val parameter = StringParameter(listOf(entry.key.toLowerCase()))
+        val parameter = StringParameter(listOf(entry.key.lowercase()))
 
         val source = EnvironmentKonfiguration()
 

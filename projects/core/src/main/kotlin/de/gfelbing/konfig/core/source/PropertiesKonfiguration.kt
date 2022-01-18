@@ -38,6 +38,6 @@ abstract class PropertiesKonfiguration(val properties: Properties = Properties()
         /**
          * Generates the property name by joining the lowercase path elements with '.'.
          */
-        fun toPropertyName(path: List<String>) = path.joinToString(".") { it.toLowerCase() }
+        fun toPropertyName(path: List<String>) = path.joinToString(".") { it.lowercase() }
     }
 }

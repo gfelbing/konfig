@@ -37,6 +37,6 @@ class EnvironmentKonfiguration(override val LOG: Log = Sources.DEFAULT_LOG) : Ko
         /**
          * Generates the environment variable name from the path by joining uppercased elements by '_'.
          */
-        fun toEnvName(path: List<String>) = path.joinToString("_") { it.toUpperCase() }
+        fun toEnvName(path: List<String>) = path.joinToString("_") { it.uppercase() }
     }
 }
