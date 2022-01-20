@@ -1,8 +1,7 @@
 plugins {
     id 'org.jetbrains.kotlin.jvm' version '1.6.10'
+    id 'konfig.kotlin'
 }
-
-apply from: "$rootDir/etc/gradle/kotlin.gradle"
 
 dependencies {
     implementation project(':konfig-core')

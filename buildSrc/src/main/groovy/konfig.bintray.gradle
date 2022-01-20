@@ -1,29 +1,9 @@
-apply plugin: 'com.jfrog.bintray'
-apply plugin: 'maven-publish'
-
-def publishVersion = "0.3.4"
-def githubRepo = "https://github.com/gfelbing/konfig"
-
-bintray {
-    user = this.properties['bintray.user'] ?: "BINTRAY_USER"
-    key = this.properties['bintray.api.key'] ?: "BINTRAY_API_KEY"
-
-    publications = ['bintray']
-    publish = true
-
-    pkg {
-        repo = 'maven'
-        name = project.name
-        licenses = ['Apache-2.0']
-        vcsUrl = "${githubRepo}.git"
-        websiteUrl = "${githubRepo}"
-        issueTrackerUrl = "${githubRepo}/issues"
-        version {
-            name = publishVersion
-            released = new Date()
-        }
-    }
+plugins {
+    id 'maven-publish'
 }
+
+def publishVersion = "0.4.0"
+def githubRepo = "https://github.com/gfelbing/konfig"
 
 def pomConfig = {
     licenses {
@@ -40,8 +20,18 @@ def pomConfig = {
 }
 
 publishing {
+    repositories {
+        maven {
+            name = "GitHubPackages"
+            url = "https://maven.pkg.github.com/gfelbing/konfig"
+            credentials {
+                username = System.getenv("GITHUB_ACTOR")
+                password = System.getenv("GITHUB_TOKEN")
+            }
+        }
+    }
     publications {
-        bintray(MavenPublication) {
+        github(MavenPublication) {
             from components.java
             artifact sourcesJar
             artifact javadocJar

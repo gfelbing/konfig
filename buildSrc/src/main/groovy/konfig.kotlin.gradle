@@ -1,5 +1,6 @@
-apply from: "$rootDir/etc/gradle/versions.gradle"
-
+plugins {
+    id 'konfig.versions'
+}
 repositories {
     mavenCentral()
 }

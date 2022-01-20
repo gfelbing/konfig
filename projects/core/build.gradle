@@ -1,6 +1,5 @@
 plugins {
     id 'org.jetbrains.kotlin.jvm' version '1.6.10'
+    id 'konfig.kotlin'
+    id 'konfig.bintray'
 }
-
-apply from: "$rootDir/etc/gradle/kotlin.gradle"
-apply from: "$rootDir/etc/gradle/bintray.gradle"
