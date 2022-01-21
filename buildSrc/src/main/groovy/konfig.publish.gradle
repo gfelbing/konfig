@@ -1,0 +1,43 @@
+plugins {
+    id 'maven-publish'
+    id 'signing'
+}
+
+def publishVersion = "0.4.0"
+def githubUrl = 'https://github.com/gfelbing/konfig'
+group = "io.github.gfelbing"
+version = "0.4.0"
+
+artifacts {
+    archives javadocJar, sourcesJar
+}
+
+signing {
+    sign configurations.archives
+}
+
+publishing {
+    publications {
+        mavenCentral(MavenPublication) {
+            pom {
+                name = project.name
+                description = 'Lightweight configuration framework for kotlin'
+                url = githubUrl
+                licenses {
+                    license {
+                        name = 'The Apache License, Version 2.0'
+                        url = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+                    }
+                }
+                scm {
+                    connection = 'scm:git:git://github.com/gfelbing/konfig.git'
+                    developerConnection = 'scm:git:ssh://github.com/gfelbing/konfig.git'
+                    url = githubUrl
+                }
+            }
+        }
+    }
+}
+
+
+
