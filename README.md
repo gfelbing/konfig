@@ -13,6 +13,6 @@ dependencies {
 }
 ```
 
-An example can be found [here](projects/examples/src/main/kotlin/de/gfelbing/konfig/examples/hello/Main.kt).
+An example can be found [here](projects/examples/src/main/kotlin/de/gfelbing/konfig/examples/onefile/Main.kt).
 
 
