@@ -4,11 +4,12 @@ Lightweight configuration framework for kotlin
 
 ## Usage
 
+konfig is available through the mavenCentral repositories.
 To use konfig in your gradle project, add the following dependencies:
 
 ```
 dependencies {
-    implementation 'de.gfelbing:konfig-core:0.4.0'
+    implementation 'io.github.gfelbing:konfig-core:0.4.0'
 }
 ```
 
