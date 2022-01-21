@@ -46,6 +46,13 @@ publishing {
                     developerConnection = 'scm:git:ssh://github.com/gfelbing/konfig.git'
                     url = githubUrl
                 }
+                developers {
+                    developer {
+                        id = 'gfelbing'
+                        name = 'Georg Welzel'
+                        email = 'gwelzel@mailbox.org'
+                    }
+                }
             }
         }
     }
