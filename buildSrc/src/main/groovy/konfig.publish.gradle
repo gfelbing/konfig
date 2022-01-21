@@ -7,22 +7,34 @@ def publishVersion = "0.4.0"
 def githubUrl = 'https://github.com/gfelbing/konfig'
 group = "io.github.gfelbing"
 version = "0.4.0"
+def isReleaseVersion = !version.endsWith("SNAPSHOT")
 
-artifacts {
-    archives javadocJar, sourcesJar
+java {
+    withJavadocJar()
+    withSourcesJar()
 }
 
-signing {
-    sign configurations.archives
-}
 
 publishing {
+    repositories {
+        maven {
+            def releaseRepo = "https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/"
+            def snapshotRepo = "https://s01.oss.sonatype.org/content/repositories/snapshots/"
+            url = isReleaseVersion ? releaseRepo : snapshotRepo
+            credentials {
+                username = project.properties['ossrh.username']
+                password = project.properties['ossrh.password']          
+            }
+        }
+    }
     publications {
         mavenCentral(MavenPublication) {
             pom {
+                groupId = 'io.github.gfelbing'
                 name = project.name
                 description = 'Lightweight configuration framework for kotlin'
                 url = githubUrl
+                from components.java
                 licenses {
                     license {
                         name = 'The Apache License, Version 2.0'
@@ -39,5 +51,10 @@ publishing {
     }
 }
 
-
-
+signing {
+    useGpgCmd()
+    sign publishing.publications.mavenCentral
+}
+tasks.withType(Sign) {
+    onlyIf { isReleaseVersion }
+}
